@@ -1,8 +1,8 @@
 #! /bin/bash
 
 dir=$1
-# valid modes: convert, fix
-mode=${2-"convert"}
+# valid modes: merge, merge-compress
+mode=${2-"merge-compress"}
 
 # convert dir to name if not specified
 output_dir=${3:-$(basename $dir)}
@@ -10,6 +10,7 @@ source_ext=${4:-"mp4"}
 target_ext=${5:-"mp4"}
 
 function convert_with_file_list() {
+	compress=${1-"false"}
 	text_fle="files.txt"
 
 	# clean up
@@ -20,26 +21,20 @@ function convert_with_file_list() {
 	done
 
 	# convert all file into a single file with ffmpeg, copy first file codec and aoide re-encoding
-	ffmpeg -f concat -safe 0 -i $text_fle -c copy ${output_dir}_merged.$target_ext
+	if [ "$compress" == "true" ]; then
+		ffmpeg -f concat -safe 0 -i $text_fle ${output_dir}_merged_compressed.$target_ext
+	else
+		ffmpeg -f concat -safe 0 -i $text_fle -c copy ${output_dir}_merged.$target_ext
+	fi
 
 	# clean up
 	rm -f $text_fle
 }
 
-function fix_all_files() {
-	fixed_dir_in_same_level=$dir.fixed
-	mkdir -p $fixed_dir_in_same_level
-	for f in $dir/*.$source_ext; do
-		fixed_file=$fixed_dir_in_same_level/$(basename $f)
-		ffmpeg -i $f -c copy $fixed_file
-	done
-}
-
-if [ "$mode" == "convert" ]; then
+if [ "$mode" == "merge" ]; then
 	convert_with_file_list
-elif [ "$mode" == "fix" ]; then
-	fix_all_files
+elif [ "$mode" == "merge-compress" ]; then
+	convert_with_file_list true
 else
 	echo "invalid mode: $mode"
-	exit 1
 fi

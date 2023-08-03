@@ -12,10 +12,10 @@ A simple cli tool to convert multiple video files into a single file through ffm
 - Run this command `./merge.sh [folder_name]` to merge each folder.
 
 ## Arguments
-| Position | Variable Name | Default Value          | Valid Values                       |
+| Position | Variable Name | Default Value          | Other Values                       |
 | -------- | ------------- | ---------------------- | ---------------------------------- |
 | 1        | `dir`         | N/A                    | N/A                                |
-| 2        | `mode`        | `convert`              | `convert`, `fix`                   |
+| 2        | `mode`        | `merge_compress`       | `merge`                            |
 | 3        | `output_dir`  | The base name of `dir` | N/A                                |
 | 4        | `source_ext`  | `mp4`                  | Any valid file extension of ffmpeg |
 | 5        | `target_ext`  | `mp4`                  | Any valid file extension of ffmpeg |
