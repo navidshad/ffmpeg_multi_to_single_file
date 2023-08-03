@@ -2,7 +2,7 @@
 A simple cli tool to convert multiple video files into a single file through ffmpeg
 
 ## Deependencies
-- ffmpeg cli tool
+- FFMPEG cli tool
 - Bash terminal
 
 ## Best practice
