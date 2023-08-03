@@ -1,15 +1,15 @@
 # Merge multiple files
 A simple cli tool to convert multiple video files into a single file through ffmpeg
 
-## Deependencies
+## Dependencies
 - FFMPEG cli tool
 - Bash terminal
 
 ## Best practice
-- Copy script file into a root directory
-- Group your videos into different folders in the rot directory
-- Run this command for each folder:
-	`./merge.sh [folder_name]`
+- Copy the script file `merge.sh` into a root directory.
+- Run `chmod +x merge.sh` to make the script executable.
+- Group your videos into different folders in the root directory.
+- Run this command `./merge.sh [folder_name]` to merge each folder.
 
 ## Arguments
 | Position | Variable Name | Default Value          | Valid Values                       |
