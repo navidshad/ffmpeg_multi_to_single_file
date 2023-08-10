@@ -15,7 +15,7 @@ A simple cli tool to convert multiple video files into a single file through ffm
 | Position | Variable Name | Default Value          | Other Values                       |
 | -------- | ------------- | ---------------------- | ---------------------------------- |
 | 1        | `dir`         | N/A                    | N/A                                |
-| 2        | `mode`        | `merge_compress`       | `merge`                            |
+| 2        | `mode`        | `merge_compress`       | `merge`, `compress`                |
 | 3        | `output_dir`  | The base name of `dir` | N/A                                |
 | 4        | `source_ext`  | `mp4`                  | Any valid file extension of ffmpeg |
 | 5        | `target_ext`  | `mp4`                  | Any valid file extension of ffmpeg |
