@@ -1,4 +1,14 @@
 #! /bin/bash
+echo "Running merge.sh from $(pwd)"
+
+# help message
+if [ "$1" == "-h" ]; then
+	echo "Usage: ./merge.sh <dir> <mode> <output_dir> <source_ext> <target_ext>"
+	echo "Example: ./merge.sh ./videos merge-compress merged mp4 mp4"
+	echo "Example: ./merge.sh ./videos compress compressed mp4 mp4"
+	echo "Example: ./merge.sh ./videos merge merged mp4 mp4"
+	exit 0
+fi
 
 dir=$1
 # valid modes: merge, merge-compress, compress
