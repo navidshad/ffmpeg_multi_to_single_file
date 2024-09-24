@@ -19,9 +19,19 @@ dir="$1"
 mode=${2-"merge-compress"}
 
 # convert dir to name if not specified
-output_dir="${3:-$(basename "$dir")}"
+output_dir="${3:-$(dirname "$dir")}"
 source_ext=${4:-"mp4"}
 target_ext=${5:-"mp4"}
+
+# eacho input
+echo "  "
+echo "Merge Inputs --------------------"
+echo "dir: $dir"
+echo "mode: $mode"
+echo "output_dir: $(pwd)/$output_dir"
+echo "source_ext: $source_ext"
+echo "target_ext: $target_ext"
+echo "---------------------------------"
 
 function convert_with_file_list() {
 	compress=${1-"false"}
@@ -47,28 +57,37 @@ function convert_with_file_list() {
 
 # compress all files in a directory without merging
 function compress_with_file_list() {
-	output_dir=$(pwd)/"$output_dir"
+	output_dir=$(dirname "$dir")
 
 	# create output dir if not exist
 	if [ ! -d "$output_dir" ]; then
 		mkdir "$output_dir"
 	fi
 
-	all_files=$(ls "$dir"/*."$source_ext")
+	if [ -f "$dir" ]; then
+		# If $dir is a single file
+		all_files="$dir"
+	else
+		# If $dir is a directory
+		all_files=$(ls "$dir"/*."$source_ext")
+		total_files=$(echo "$all_files" | wc -w)
+	fi
 
 	# print current and total files
 	total_files=$(echo "$all_files" | wc -w)
 	current_file=1
 	echo "total files: $total_files"
 
-	for f in $all_files; do
-		echo "Converting file $current_file/$total_files: $f"
+	# process each file
+	echo "$all_files" | while IFS= read -r f; do
+		echo "Converting file $current_file/$total_files:"
+		echo "file: $f"
 
 		# extract filename and extension
 		filename=$(basename -- "$f")
 
 		# convert file
-		ffmpeg -i "$f" "$output_dir/$filename'_compressed'.$target_ext"
+		ffmpeg -i "$f" "$output_dir/${filename%.*}_compressed.$target_ext"
 
 		current_file=$((current_file + 1))
 	done
